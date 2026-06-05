@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>КП — Super Burger · Иван Погоров</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fafaf8;--dark:#111111;--mid:#6b6b6b;--light:#f0f0ee;--bd:#ddd;
+  --red:#c0392b;
+  --font:'Archivo Black','Arial Black',Arial,sans-serif;--body:Arial,sans-serif;
+}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{color:var(--dark);font-family:var(--body);overflow-x:hidden;background:var(--bg)}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer}
+.hatch{background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20L20 0M-5 5L5-5M15 25L25 15' stroke='%23dddddd' stroke-width='1.5'/%3E%3C/svg%3E")}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,64px);background:var(--bg);border-bottom:3px solid var(--dark)}
+.nav-logo{font-family:var(--font);font-size:11px;letter-spacing:-0.02em;text-transform:uppercase;line-height:1.1;cursor:default;user-select:none}
+.nav-links{display:flex}
+.nav-links a{font-family:var(--font);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);padding:8px 14px;border-left:1px solid var(--bd);transition:color .15s,background .15s}
+.nav-links a:hover{color:var(--dark);background:var(--light)}
+.nav-links a:last-child{border-right:1px solid var(--bd)}
+.nav-cta{background:var(--dark);color:var(--bg);border:none;font-family:var(--font);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;padding:10px 20px;transition:opacity .15s}
+.nav-cta:hover{opacity:.75}
+@media(max-width:720px){.nav-links{display:none}}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding:80px 0 0;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,6vh,72px) clamp(20px,5vw,64px);position:relative;z-index:1;grid-column:1;grid-row:1}
+.hero-right{grid-column:2;grid-row:1;display:flex;align-items:center;justify-content:center;padding:clamp(20px,4vh,48px) clamp(20px,3vw,40px);position:relative;z-index:1}
+
+.hero-tag{font-family:var(--font);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mid);margin-bottom:clamp(16px,2.5vh,28px);display:flex;align-items:center;gap:10px}
+.hero-tag::before{content:'';width:24px;height:2px;background:var(--mid)}
+.hero-h1{font-family:var(--font);font-size:clamp(48px,7.5vw,112px);line-height:.87;letter-spacing:-0.03em;text-transform:uppercase;margin-bottom:clamp(20px,3vh,32px)}
+.hero-sub{font-size:clamp(12px,1.1vw,15px);color:var(--mid);max-width:420px;line-height:1.7;margin-bottom:clamp(28px,4vh,44px)}
+.hero-btns{display:flex;gap:0;flex-wrap:wrap}
+.btn-dark{background:var(--dark);color:var(--bg);border:none;font-family:var(--font);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;padding:clamp(13px,2vh,16px) clamp(22px,3vw,32px);transition:opacity .15s;display:inline-flex;align-items:center;gap:8px}
+.btn-dark:hover{opacity:.75}
+.btn-light{background:none;color:var(--dark);border:2px solid rgba(17,17,17,.35);font-family:var(--font);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;padding:clamp(11px,2vh,14px) clamp(22px,3vw,32px);transition:border-color .15s,background .15s}
+.btn-light:hover{border-color:var(--dark);background:var(--light)}
+.btn-demo{background:var(--bg);color:var(--dark);border:none;font-family:var(--font);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;padding:clamp(14px,2.2vh,18px) clamp(28px,3.5vw,44px);transition:opacity .15s;white-space:nowrap;flex-shrink:0;cursor:pointer}
+.btn-demo:hover{opacity:.8}
+
+
+
+
+
+/* BIG NUMBERS INFOGRAPHIC */
+.hero-numbers{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.hn{position:absolute;font-family:var(--font);font-weight:900;line-height:1;letter-spacing:-0.06em;text-transform:uppercase;user-select:none;display:flex;flex-direction:column;gap:0}
+.hn-val{color:var(--dark)}
+.hn-lbl{font-family:var(--font);font-size:clamp(9px,.85vw,13px);letter-spacing:.22em;text-transform:uppercase;color:var(--dark);line-height:1.3;margin-top:8px;opacity:.45;padding:4px 8px;background:rgba(250,250,248,.85)}
+.hn-1{bottom:-4%;left:-1%}
+.hn-1 .hn-val{font-size:clamp(160px,24vw,340px);opacity:.07}
+.hn-2{top:5%;right:-3%;transform:rotate(-6deg);align-items:flex-end}
+.hn-2 .hn-val{font-size:clamp(110px,17vw,240px);opacity:.045}
+.hn-3{bottom:-4%;right:-1%}
+.hn-3 .hn-val{font-size:clamp(90px,13vw,190px);opacity:.038}
+
+/* PHONE MOCKUP */
+.phone-wrap{position:relative;width:min(260px,22vw);animation:phoneFloat 4s ease-in-out infinite}
+@keyframes phoneFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* NOTIFICATION */
+.tg-notify{position:absolute;top:18%;right:-44%;width:clamp(140px,14vw,190px);background:#fff;border-left:3px solid #111;padding:10px 14px 10px 12px;filter:drop-shadow(0 8px 24px rgba(0,0,0,.13));animation:notifyPop 3.5s ease-in-out infinite;z-index:10}
+@keyframes notifyPop{
+  0%{opacity:0;transform:translateX(14px)}
+  15%{opacity:1;transform:translateX(0)}
+  75%{opacity:1;transform:translateX(0)}
+  90%{opacity:0;transform:translateX(14px)}
+  100%{opacity:0;transform:translateX(14px)}
+}
+.tg-notify-head{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.tg-notify-icon{width:16px;height:16px;background:#111;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tg-notify-app{font-family:var(--font);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid)}
+.tg-notify-time{font-family:var(--font);font-size:7px;color:var(--bd);margin-left:auto}
+.tg-notify-title{font-family:var(--font);font-size:10px;letter-spacing:-.01em;color:var(--dark);margin-bottom:3px}
+.tg-notify-body{font-family:var(--body);font-size:9px;color:var(--mid);line-height:1.45}
+.tg-notify-price{font-family:var(--font);font-size:11px;color:var(--dark);margin-top:5px}
+
+/* Second notification — delayed */
+.tg-notify-2{position:absolute;top:38%;right:-44%;width:clamp(140px,14vw,190px);background:#fff;border-left:3px solid #111;padding:10px 14px 10px 12px;filter:drop-shadow(0 8px 24px rgba(0,0,0,.13));animation:notifyPop2 3.5s ease-in-out infinite;z-index:9}
+@keyframes notifyPop2{
+  0%{opacity:0;transform:translateX(14px)}
+  30%{opacity:0;transform:translateX(14px)}
+  45%{opacity:1;transform:translateX(0)}
+  80%{opacity:1;transform:translateX(0)}
+  95%{opacity:0;transform:translateX(14px)}
+  100%{opacity:0;transform:translateX(14px)}
+}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.hero-right{display:none}.hero-stats{grid-column:1}.hero-left{padding-top:clamp(40px,8vh,80px)}}
+@media(max-width:600px){.hero-h1{font-size:clamp(44px,13vw,80px)}}
+
+/* SECTION */
+.sec-label{font-family:var(--font);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mid);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-label::before{content:'';width:20px;height:2px;background:var(--mid)}
+section{padding:clamp(64px,10vh,112px) clamp(20px,5vw,64px);border-bottom:3px solid var(--dark)}
+.sec-title{font-family:var(--font);font-size:clamp(36px,7vw,88px);line-height:.93;letter-spacing:-0.03em;text-transform:uppercase;margin-bottom:clamp(32px,5vh,56px)}
+
+/* VS — вариант Б: акцентная цифра + список */
+.prob-lead{font-size:clamp(13px,1.2vw,15px);color:var(--mid);max-width:580px;line-height:1.8;margin-bottom:clamp(40px,7vh,60px)}
+.prob-lead strong{color:var(--dark);font-family:var(--font)}
+.vs-blocks{display:grid;grid-template-columns:1fr 1.4fr;align-items:start}
+.vs-block{position:relative}
+.vs-block.agg{background:var(--light);padding:clamp(32px,5vw,64px) clamp(24px,3.5vw,48px);display:flex;flex-direction:column;gap:clamp(28px,4vh,48px)}
+.vs-block.own{background:var(--bg);padding:clamp(32px,5vw,64px) clamp(24px,3.5vw,48px);position:relative;overflow:hidden;display:flex;flex-direction:column;gap:clamp(28px,4vh,48px)}
+.vs-block.own::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20L20 0M-5 5L5-5M15 25L25 15' stroke='%23111111' stroke-width='1'/%3E%3C/svg%3E");opacity:.03;pointer-events:none}
+.vs-block.own::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--dark)}
+.vs-block.own > *{position:relative;z-index:1}
+
+/* agg: ghost big number as bg */
+.vs-ghost{position:absolute;font-family:var(--font);font-size:clamp(120px,20vw,240px);line-height:1;letter-spacing:-0.06em;color:var(--dark);opacity:.04;bottom:-4%;left:-2%;pointer-events:none;user-select:none}
+
+.vs-block-label{font-family:var(--font);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--mid);display:flex;align-items:center;gap:8px}
+.vs-badge-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;background:var(--mid)}
+.vs-block.agg .vs-badge-dot{background:var(--red);animation:blink 1.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+.vs-big-num{font-family:var(--font);font-size:clamp(80px,13vw,160px);line-height:.88;letter-spacing:-0.05em;margin-bottom:clamp(6px,1vh,10px)}
+.vs-block.agg .vs-big-num{color:var(--red)}
+.vs-block.own .vs-big-num{color:var(--dark)}
+.vs-big-sub{font-size:clamp(11px,.9vw,13px);color:var(--mid);line-height:1.5;max-width:240px}
+
+.vs-items{list-style:none;display:flex;flex-direction:column}
+.vs-item{display:flex;align-items:flex-start;gap:14px;padding:clamp(10px,1.5vh,14px) 0;border-top:1px solid var(--bd);font-size:clamp(12px,1vw,14px);line-height:1.55;color:var(--mid)}
+.vs-item:first-child{border-top:none}
+.vs-item-num{font-family:var(--font);font-size:9px;letter-spacing:.1em;color:var(--bd);flex-shrink:0;width:18px;padding-top:2px}
+.vs-item-body{flex:1}
+.vs-block.own .vs-item-body strong{color:var(--dark);font-family:var(--font)}
+
+/* own: big number + list layout */
+.vs-own-head{display:flex;align-items:flex-end;gap:clamp(16px,2.5vw,32px)}
+.vs-own-num-wrap{flex-shrink:0}
+.vs-own-context{flex:1;padding-bottom:8px}
+.vs-own-context-val{font-family:var(--font);font-size:clamp(13px,1.4vw,18px);letter-spacing:-0.02em;color:var(--dark);margin-bottom:4px}
+.vs-own-context-lbl{font-size:11px;color:var(--mid)}
+@media(max-width:720px){.vs-blocks{grid-template-columns:1fr}}
+
+/* COUNTER */
+.counter-card{border:3px solid var(--dark);margin-top:clamp(16px,2.5vw,24px)}
+.counter-top{display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:clamp(24px,3.5vw,40px) clamp(24px,3.5vw,44px) clamp(20px,3vw,32px);border-bottom:1px solid var(--bd)}
+.counter-eyebrow{font-family:var(--font);font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);margin-bottom:8px}
+.counter-number{font-family:var(--font);font-size:clamp(36px,6vw,72px);line-height:1;letter-spacing:-0.04em;color:var(--red);font-variant-numeric:tabular-nums}
+.counter-since{font-family:var(--font);font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin-top:6px}
+.counter-year-badge{font-family:var(--font);font-size:12px;color:var(--mid);letter-spacing:0.08em;border:2px solid var(--bd);padding:8px 14px;align-self:flex-start}
+.counter-sliders{padding:clamp(20px,3vw,32px) clamp(24px,3.5vw,44px);display:flex;flex-direction:column;gap:20px;border-bottom:1px solid var(--bd)}
+.slider-row{display:flex;flex-direction:column;gap:8px}
+.slider-head{display:flex;justify-content:space-between;align-items:baseline}
+.slider-label{font-family:var(--font);font-size:8px;color:var(--mid);letter-spacing:0.18em;text-transform:uppercase}
+.slider-val{font-family:var(--font);font-size:14px;letter-spacing:-0.02em}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2px;outline:none;cursor:pointer;background:var(--bd)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--dark);cursor:pointer;transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.3)}
+.counter-results{display:grid;grid-template-columns:repeat(3,1fr)}
+.cr-cell{padding:clamp(16px,2.5vw,28px);border-right:1px solid var(--bd);display:flex;flex-direction:column;gap:4px}
+.cr-cell:last-child{border-right:none}
+.cr-label{font-family:var(--font);font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid)}
+.cr-val{font-family:var(--font);font-size:clamp(16px,2.2vw,26px);line-height:1;letter-spacing:-0.02em}
+.cr-val.loss{color:var(--red)}
+.cr-note{font-size:10px;color:var(--mid)}
+@media(max-width:700px){.counter-top{grid-template-columns:1fr}.counter-year-badge{display:none}.counter-results{grid-template-columns:1fr 1fr}.cr-cell:nth-child(2){border-right:none}.cr-cell:nth-child(3){border-top:1px solid var(--bd);grid-column:1/-1;border-right:none}}
+
+/* TABS */
+.feat-tabs-nav{display:flex;border-bottom:3px solid var(--dark);overflow-x:auto;scrollbar-width:none}
+.feat-tab-btn{background:var(--bg);border:none;border-right:1px solid var(--bd);padding:14px 22px;white-space:nowrap;font-family:var(--font);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);cursor:pointer;transition:background .15s,color .15s}
+.feat-tab-btn:hover{color:var(--dark);background:var(--light)}
+.feat-tab-btn.on{background:var(--dark);color:var(--bg)}
+.feat-panel{display:none;border:3px solid var(--dark);border-top:none}
+.feat-panel.on{display:grid;grid-template-columns:1fr 1fr}
+.fp-card{padding:clamp(20px,2.8vw,32px);border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);display:flex;flex-direction:column;transition:background .18s}
+.fp-card:hover{background:var(--light)}
+.fp-card.wide{grid-column:1/-1;border-right:none}
+.fp-card-metric{font-family:var(--font);font-size:clamp(32px,4.5vw,56px);line-height:1;letter-spacing:-0.03em;margin-bottom:clamp(10px,1.5vh,16px)}
+.fp-card-name{font-family:var(--font);font-size:clamp(12px,1.1vw,14px);text-transform:uppercase;letter-spacing:-0.01em;margin-bottom:6px}
+.fp-card-desc{font-size:11px;color:var(--mid);line-height:1.65;flex:1}
+
+
+
+
+@media(max-width:600px){.feat-panel.on{grid-template-columns:1fr}.fp-card.wide{grid-column:auto}}
+
+/* ROI */
+.roi-grid{display:grid;grid-template-columns:1.2fr 1fr}
+.roi-steps{border:3px solid var(--dark);border-right:none}
+.roi-step{display:flex;border-bottom:1px solid var(--bd)}
+.roi-step:last-child{border-bottom:none}
+.roi-step-num{width:clamp(48px,6vw,64px);display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:13px;color:var(--mid);flex-shrink:0;border-right:1px solid var(--bd);padding:clamp(18px,2.5vh,28px) 0}
+.roi-step-body{padding:clamp(18px,2.5vh,28px) clamp(20px,2.5vw,32px)}
+.roi-step-lbl{font-family:var(--font);font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);margin-bottom:6px}
+.roi-step-val{font-family:var(--font);font-size:clamp(14px,1.8vw,20px);text-transform:uppercase;letter-spacing:-0.02em}
+.roi-highlight-box{border:3px solid var(--dark);padding:clamp(24px,3.5vw,44px);text-align:center;background:var(--dark);color:var(--bg)}
+.roi-hl-pre{font-family:var(--font);font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:#555;margin-bottom:12px}
+.roi-hl-val{font-family:var(--font);font-size:clamp(40px,6vw,72px);line-height:1;margin-bottom:8px;letter-spacing:-0.04em}
+.roi-hl-sub{font-size:clamp(11px,1.1vw,13px);color:#777;line-height:1.65}
+.roi-hl-accent{font-family:var(--font);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;margin-top:24px;padding:12px 20px;background:var(--bg);color:var(--dark);display:inline-block}
+@media(max-width:800px){.roi-grid{grid-template-columns:1fr}.roi-steps{border-right:3px solid var(--dark)}.roi-highlight-box{border-top:none}}
+
+/* PACKAGES */
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);border:3px solid var(--dark)}
+.pkcard{padding:clamp(20px,3vw,32px);display:flex;flex-direction:column;border-right:1px solid var(--bd);position:relative;transition:background .18s}
+.pkcard:last-child{border-right:none}
+.pkcard:hover{background:var(--light)}
+.pkcard.hot{background:var(--dark);color:var(--bg)}
+.pkcard.hot:hover{background:#1a1a1a}
+.pk-pop{font-family:var(--font);font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);margin-bottom:10px}
+.pkcard.hot .pk-pop{color:#555}
+.pk-name{font-family:var(--font);font-size:clamp(18px,2.2vw,26px);text-transform:uppercase;letter-spacing:-0.02em;margin-bottom:6px;line-height:1}
+.pk-tagline{font-size:11px;color:var(--mid);margin-bottom:18px;line-height:1.5}
+.pkcard.hot .pk-tagline{color:#777}
+.pk-price{font-family:var(--font);font-size:clamp(28px,3.5vw,44px);letter-spacing:-0.04em;line-height:1}
+.pk-price-note{font-size:10px;color:var(--mid);margin-top:3px;margin-bottom:20px}
+.pkcard.hot .pk-price-note{color:#555}
+.pk-divider{height:2px;background:var(--bd);margin-bottom:16px}
+.pkcard.hot .pk-divider{background:#2a2a2a}
+.pk-feats{list-style:none;flex:1;display:flex;flex-direction:column;margin-bottom:20px}
+.pk-feats li{font-size:11px;color:var(--mid);display:flex;gap:8px;align-items:flex-start;line-height:1.45;padding:8px 0;border-top:1px solid var(--bd)}
+.pkcard.hot .pk-feats li{color:#888;border-top-color:#2a2a2a}
+.pk-feats li .ck{font-family:var(--font);font-size:10px;flex-shrink:0;margin-top:1px;width:12px;color:var(--dark)}
+.pkcard.hot .pk-feats li .ck{color:var(--bg)}
+.pk-feats li.off{color:var(--bd)}
+.pk-feats li.off .ck{color:var(--bd)}
+.pkcard.hot .pk-feats li.off{color:#2a2a2a}
+.pkcard.hot .pk-feats li.off .ck{color:#2a2a2a}
+.pk-time{font-family:var(--font);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:18px;padding:10px 14px;border-left:2px solid var(--bd)}
+.pkcard.hot .pk-time{background:#0d0d0d;color:#555;border-left-color:#2a2a2a}
+.pk-time strong{font-family:var(--font);color:var(--dark)}
+.pkcard.hot .pk-time strong{color:var(--bg)}
+.btn-pk{background:none;border:2px solid var(--bd);font-family:var(--font);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dark);padding:13px;width:100%;transition:border-color .15s,background .15s}
+.btn-pk:hover{border-color:var(--dark);background:var(--light)}
+.pkcard.hot .btn-pk{background:var(--bg);border-color:var(--bg);color:var(--dark)}
+.pkcard.hot .btn-pk:hover{background:#e0e0de}
+@media(max-width:900px){.pkg-grid{grid-template-columns:1fr}.pkcard{border-right:none;border-bottom:1px solid var(--bd)}.pkcard:last-child{border-bottom:none}}
+
+/* STUDIO */
+.process-card{border:3px solid var(--dark)}
+.process-head{padding:clamp(20px,3.5vw,40px) clamp(24px,3.5vw,44px);border-bottom:3px solid var(--dark);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.process-head-name{font-family:var(--font);font-size:clamp(18px,2.5vw,28px);text-transform:uppercase;letter-spacing:-0.03em;margin-bottom:4px}
+.process-head-sub{font-family:var(--font);font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid)}
+.guarantee-item{display:grid;grid-template-columns:clamp(48px,6vw,72px) 1fr auto;align-items:center;border-bottom:1px solid var(--bd);transition:background .15s}
+.guarantee-item:last-child{border-bottom:none}
+.guarantee-item:hover{background:var(--light)}
+.gi-index{padding:clamp(18px,2.5vh,24px) 0;text-align:center;border-right:1px solid var(--bd);font-family:var(--font);font-size:12px;color:var(--mid);flex-shrink:0}
+.gi-body{padding:clamp(14px,2.5vh,22px) clamp(18px,2.5vw,30px)}
+.gi-title{font-family:var(--font);font-size:clamp(12px,1.1vw,14px);text-transform:uppercase;margin-bottom:4px}
+.gi-desc{font-size:11px;color:var(--mid);line-height:1.6}
+.gi-tag{padding:0 clamp(16px,2.5vw,32px);flex-shrink:0}
+.gi-tag-inner{font-family:var(--font);font-size:clamp(11px,1.1vw,13px);color:var(--mid);white-space:nowrap}
+@media(max-width:640px){.guarantee-item{grid-template-columns:40px 1fr}.gi-tag{display:none}}
+
+/* CTA */
+.cta-steps{display:flex;flex-direction:column;gap:0;margin:clamp(20px,3vh,32px) 0}
+.cta-step{display:flex;gap:16px;align-items:flex-start;padding:clamp(14px,2vh,20px) 0;border-top:1px solid #2a2a2a}
+.cta-step:last-child{border-bottom:1px solid #2a2a2a}
+.cta-step-num{font-family:var(--font);font-size:clamp(22px,2.5vw,32px);color:#333;letter-spacing:-0.03em;flex-shrink:0;width:clamp(28px,3vw,40px);line-height:1}
+.cta-step-title{font-family:var(--font);font-size:clamp(13px,1.2vw,16px);color:var(--bg);letter-spacing:-0.01em;text-transform:uppercase;margin-bottom:4px}
+.cta-step-desc{font-size:clamp(11px,1vw,13px);color:#666;line-height:1.55}
+.cta-deadline-note{font-size:clamp(11px,1vw,13px);color:#555;line-height:1.7;margin-top:clamp(16px,2.5vh,24px)}
+.cta-deadline-note strong{color:#888;font-family:var(--font)}
+.cta-deadline-note em{font-family:var(--font);font-size:15px;color:var(--bg);font-style:normal}
+.cta-main-action{margin-bottom:clamp(20px,3vh,32px)}
+.cta-main-btn{display:block;background:var(--bg);color:var(--dark);font-family:var(--font);font-size:clamp(10px,1vw,13px);letter-spacing:0.12em;text-transform:uppercase;padding:clamp(16px,2.5vh,22px) clamp(24px,3vw,36px);text-decoration:none;margin-bottom:10px;transition:opacity .15s;text-align:center}
+.cta-main-btn:hover{opacity:.85}
+.cta-main-hint{font-size:11px;color:#555;text-align:center;line-height:1.55}
+.cta-sec{background:var(--dark);color:var(--bg);padding:clamp(72px,12vh,120px) clamp(20px,5vw,64px)}
+.cta-label{font-family:var(--font);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:#555;margin-bottom:clamp(20px,4vh,40px);display:flex;align-items:center;gap:10px}
+.cta-label::before{content:'';width:20px;height:2px;background:#333;flex-shrink:0}
+.cta-inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,8vw,96px);align-items:start}
+.cta-deadline-label{font-family:var(--font);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#555;margin-bottom:clamp(12px,2vh,20px)}
+.cta-deadline-date{font-family:var(--font);font-size:clamp(44px,8vw,96px);line-height:.92;letter-spacing:-0.04em;text-transform:uppercase;margin-bottom:clamp(16px,2.5vh,28px)}
+.cta-deadline-sub{font-size:clamp(12px,1.2vw,14px);color:#777;line-height:1.75;margin-bottom:clamp(20px,3.5vh,32px);max-width:360px}
+.cta-deadline-sub strong{color:#aaa;font-family:var(--font)}
+.cta-saving{font-family:var(--font);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:#555;display:flex;align-items:center;gap:8px}
+.cta-saving::before{content:'';width:20px;height:2px;background:#333;flex-shrink:0}
+.cta-days{margin-top:clamp(24px,4vh,40px);padding-top:clamp(16px,3vh,28px);border-top:1px solid #2a2a2a;font-size:11px;color:#555;display:flex;align-items:center;gap:8px}
+.cta-days em{font-family:var(--font);font-size:16px;color:var(--bg);font-style:normal;letter-spacing:-0.02em}
+.cta-contacts{display:flex;flex-direction:column}
+.cta-contact-row{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:clamp(18px,3vh,30px) 0;border-bottom:1px solid #2a2a2a;transition:opacity .15s}
+.cta-contact-row:first-child{border-top:1px solid #2a2a2a}
+.cta-contact-row:hover{opacity:.6}
+.cta-contact-ch{font-family:var(--font);font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:#555;margin-bottom:5px}
+.cta-contact-val{font-family:var(--font);font-size:clamp(16px,2.2vw,28px);line-height:1;letter-spacing:-0.03em;text-transform:uppercase}
+.cta-contact-hint{font-size:10px;color:#555;margin-top:4px}
+.cta-contact-arrow{color:#444}
+@media(max-width:720px){.cta-inner{grid-template-columns:1fr;gap:clamp(36px,8vh,56px)}}
+
+/* FOOTER */
+footer{background:var(--dark);border-top:1px solid #2a2a2a;padding:clamp(20px,4vh,36px) clamp(20px,5vw,64px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.ft-copy{font-size:9px;color:#444;font-family:var(--font);letter-spacing:0.12em;text-transform:uppercase}
+.ft-logo{font-family:var(--font);font-size:11px;color:var(--bg);text-transform:uppercase;line-height:1.1}
+
+/* ANIM */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+.reveal.vis{opacity:1;transform:none}
+.reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}.reveal-d3{transition-delay:.3s}.reveal-d4{transition-delay:.4s}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">SUPER<br>BURGER</div>
+  <div class="nav-links">
+    <a href="#problem">Проблема</a>
+    <a href="#solution">Решение</a>
+    <a href="#packages">Цены</a>
+    <a href="#studio">Обо мне</a>
+    <a href="#cta">Контакты</a>
+  </div>
+  <button class="nav-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Получить демо →</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg hatch"></div>
+
+  <!-- BIG NUMBERS -->
+  <div class="hero-numbers">
+    <div class="hn hn-1">
+      <span class="hn-val">0%</span>
+      <span class="hn-lbl">комиссия<br>агрегаторам</span>
+    </div>
+    <div class="hn hn-2">
+      <span class="hn-val">35к</span>
+      <span class="hn-lbl">стоимость<br>под ключ</span>
+    </div>
+    <div class="hn hn-3">
+      <span class="hn-val">10</span>
+      <span class="hn-lbl">дней<br>до запуска</span>
+    </div>
+  </div>
+
+  <!-- LEFT -->
+  <div class="hero-left">
+    <div class="hero-tag reveal">Коммерческое предложение</div>
+    <h1 class="hero-h1 reveal reveal-d1">SUPER<br>BURGER</h1>
+    <p class="hero-sub reveal reveal-d2">Готовый сайт с онлайн-заказом за 30&nbsp;000&nbsp;₽ — окупается за 5&nbsp;месяцев, работает без комиссии навсегда</p>
+    <div class="hero-btns reveal reveal-d3">
+      <button class="btn-dark" onclick="document.getElementById('problem').scrollIntoView({behavior:'smooth'})">Читать предложение →</button>
+      <button class="btn-light" onclick="alert('Ссылка появится позже')">Посмотреть демо</button>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: PHONE MOCKUP -->
+  <div class="hero-right reveal reveal-d2">
+    <div class="phone-wrap">
+      <!-- NOTIFICATION 1 -->
+      <div class="tg-notify">
+        <div class="tg-notify-head">
+          <div class="tg-notify-icon">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 5l2.5 2.5L9 2" stroke="#fafaf8" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <span class="tg-notify-app">Telegram · Заказы</span>
+          <span class="tg-notify-time">сейчас</span>
+        </div>
+        <div class="tg-notify-title">🧾 Новый заказ!</div>
+        <div class="tg-notify-body">Classic Smash × 1<br>Картошка фри × 1</div>
+        <div class="tg-notify-price">570 ₽ · Доставка</div>
+      </div>
+      <!-- NOTIFICATION 2 -->
+      <div class="tg-notify-2">
+        <div class="tg-notify-head">
+          <div class="tg-notify-icon">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 5l2.5 2.5L9 2" stroke="#fafaf8" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <span class="tg-notify-app">Telegram · Заказы</span>
+          <span class="tg-notify-time">1 мин</span>
+        </div>
+        <div class="tg-notify-title">🧾 Новый заказ!</div>
+        <div class="tg-notify-body">Double Down × 2<br>Острый соус</div>
+        <div class="tg-notify-price">1 380 ₽ · Самовывоз</div>
+      </div>
+      <svg viewBox="0 0 260 520" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;filter:drop-shadow(0 24px 48px rgba(0,0,0,.18))">
+        <!-- Phone shell -->
+        <rect x="4" y="4" width="252" height="512" rx="28" ry="28" fill="#111" stroke="#111" stroke-width="2"/>
+        <rect x="10" y="10" width="240" height="500" rx="24" ry="24" fill="#111"/>
+        <!-- Screen area -->
+        <rect x="14" y="14" width="232" height="492" rx="20" ry="20" fill="#fafaf8"/>
+        <!-- Notch -->
+        <rect x="88" y="14" width="84" height="22" rx="0" ry="0" fill="#111"/>
+        <rect x="88" y="14" width="84" height="11" rx="0" fill="#111"/>
+        <rect x="88" y="25" width="84" height="11" rx="11" ry="11" fill="#111"/>
+        <!-- Camera pill -->
+        <rect x="108" y="18" width="44" height="10" rx="5" fill="#2a2a2a"/>
+        <!-- ── SCREEN CONTENT ── -->
+        <!-- Header bar -->
+        <rect x="14" y="36" width="232" height="44" fill="#fafaf8"/>
+        <rect x="14" y="78" width="232" height="2" fill="#111"/>
+        <!-- Logo in header -->
+        <text x="28" y="53" font-family="Arial Black, Arial" font-weight="900" font-size="9" fill="#111" letter-spacing="-0.3" text-anchor="start">SUPER</text>
+        <text x="28" y="63" font-family="Arial Black, Arial" font-weight="900" font-size="9" fill="#111" letter-spacing="-0.3" text-anchor="start">BURGER</text>
+        <!-- Cart icon -->
+        <rect x="198" y="47" width="34" height="22" rx="0" fill="#111"/>
+        <text x="215" y="62" font-family="Arial Black, Arial" font-weight="900" font-size="8" fill="#fafaf8" text-anchor="middle" letter-spacing="0.1">ЗАКАЗ</text>
+
+        <!-- HERO image block (food photo simulation) -->
+        <rect x="14" y="80" width="232" height="140" fill="#e8e8e8"/>
+        <!-- Diagonal hatch on photo -->
+        <line x1="14" y1="80" x2="246" y2="220" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="34" y1="80" x2="246" y2="200" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="54" y1="80" x2="246" y2="180" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="74" y1="80" x2="246" y2="160" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="94" y1="80" x2="246" y2="140" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="114" y1="80" x2="246" y2="120" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="134" y1="80" x2="246" y2="100" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="154" y1="80" x2="242" y2="82" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="14" y1="100" x2="232" y2="218" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="14" y1="120" x2="212" y2="218" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="14" y1="140" x2="192" y2="218" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="14" y1="160" x2="172" y2="218" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="14" y1="180" x2="152" y2="218" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="14" y1="200" x2="130" y2="216" stroke="#ddd" stroke-width="1.5"/>
+        <!-- Gradient overlay on photo bottom -->
+        <defs>
+          <linearGradient id="photoGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#e8e8e8" stop-opacity="0"/>
+            <stop offset="70%" stop-color="#111" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#111" stop-opacity="0.92"/>
+          </linearGradient>
+        </defs>
+        <rect x="14" y="80" width="232" height="140" fill="url(#photoGrad)"/>
+        <!-- Photo label -->
+        <text x="28" y="183" font-family="Arial Black, Arial" font-weight="900" font-size="7" fill="rgba(255,255,255,.45)" letter-spacing="0.3">АВТОРСКИЕ БУРГЕРЫ</text>
+        <text x="28" y="198" font-family="Arial Black, Arial" font-weight="900" font-size="19" fill="#fafaf8" letter-spacing="-0.5">SUPER</text>
+        <text x="28" y="214" font-family="Arial Black, Arial" font-weight="900" font-size="19" fill="#fafaf8" letter-spacing="-0.5">BURGER</text>
+
+        <!-- CTA buttons row -->
+        <rect x="14" y="220" width="114" height="34" fill="#111"/>
+        <text x="71" y="241" font-family="Arial Black, Arial" font-weight="900" font-size="7.5" fill="#fafaf8" text-anchor="middle" letter-spacing="0.2">ЗАКАЗАТЬ</text>
+        <rect x="132" y="220" width="114" height="34" fill="none" stroke="#111" stroke-width="2"/>
+        <text x="189" y="241" font-family="Arial Black, Arial" font-weight="900" font-size="7.5" fill="#111" text-anchor="middle" letter-spacing="0.2">МЕНЮ</text>
+
+        <!-- Category tabs -->
+        <rect x="14" y="254" width="232" height="2" fill="#111"/>
+        <rect x="14" y="256" width="232" height="32" fill="#fafaf8"/>
+        <rect x="14" y="286" width="232" height="2" fill="#111"/>
+        <!-- Tab items -->
+        <rect x="14" y="256" width="58" height="32" fill="#111"/>
+        <text x="43" y="276" font-family="Arial Black, Arial" font-weight="900" font-size="6.5" fill="#fafaf8" text-anchor="middle" letter-spacing="0.2">БУРГЕРЫ</text>
+        <text x="101" y="276" font-family="Arial Black, Arial" font-weight="900" font-size="6.5" fill="#6b6b6b" text-anchor="middle" letter-spacing="0.2">СНЕКИ</text>
+        <rect x="130" y="256" width="1" height="32" fill="#ddd"/>
+        <text x="159" y="276" font-family="Arial Black, Arial" font-weight="900" font-size="6.5" fill="#6b6b6b" text-anchor="middle" letter-spacing="0.2">НАПИТКИ</text>
+        <rect x="188" y="256" width="1" height="32" fill="#ddd"/>
+        <text x="218" y="276" font-family="Arial Black, Arial" font-weight="900" font-size="6.5" fill="#6b6b6b" text-anchor="middle" letter-spacing="0.2">СОУСЫ</text>
+
+        <!-- Product card 1 -->
+        <rect x="14" y="288" width="232" height="80" fill="#fafaf8"/>
+        <rect x="14" y="288" width="76" height="80" fill="#f0f0ee"/>
+        <!-- Product image placeholder -->
+        <text x="52" y="336" font-family="Arial Black, Arial" font-weight="900" font-size="22" fill="rgba(0,0,0,.07)" text-anchor="middle">SB</text>
+        <rect x="14" y="368" width="232" height="1" fill="#ddd"/>
+        <!-- Product info -->
+        <text x="100" y="306" font-family="Arial Black, Arial" font-weight="900" font-size="9.5" fill="#111" letter-spacing="-0.3">CLASSIC SMASH</text>
+        <text x="100" y="320" font-family="Arial, sans-serif" font-size="7.5" fill="#6b6b6b">Говядина, чеддер, соус</text>
+        <text x="100" y="332" font-family="Arial, sans-serif" font-size="7.5" fill="#6b6b6b">маринара, хрустящий лук</text>
+        <text x="100" y="348" font-family="Arial Black, Arial" font-weight="900" font-size="11" fill="#111" letter-spacing="-0.3">490 ₽</text>
+        <!-- Add button -->
+        <rect x="192" y="338" width="46" height="22" fill="#111"/>
+        <text x="215" y="353" font-family="Arial Black, Arial" font-weight="900" font-size="12" fill="#fafaf8" text-anchor="middle">+</text>
+
+        <!-- Product card 2 -->
+        <rect x="14" y="369" width="232" height="80" fill="#fafaf8"/>
+        <rect x="14" y="369" width="76" height="80" fill="#f0f0ee"/>
+        <text x="52" y="417" font-family="Arial Black, Arial" font-weight="900" font-size="22" fill="rgba(0,0,0,.07)" text-anchor="middle">SB</text>
+        <text x="100" y="387" font-family="Arial Black, Arial" font-weight="900" font-size="9.5" fill="#111" letter-spacing="-0.3">DOUBLE DOWN</text>
+        <text x="100" y="401" font-family="Arial, sans-serif" font-size="7.5" fill="#6b6b6b">Двойная котлета, бекон,</text>
+        <text x="100" y="413" font-family="Arial, sans-serif" font-size="7.5" fill="#6b6b6b">острый соус, маринованный</text>
+        <text x="100" y="429" font-family="Arial Black, Arial" font-weight="900" font-size="11" fill="#111" letter-spacing="-0.3">690 ₽</text>
+        <rect x="192" y="419" width="46" height="22" fill="#111"/>
+        <text x="215" y="434" font-family="Arial Black, Arial" font-weight="900" font-size="12" fill="#fafaf8" text-anchor="middle">+</text>
+        <rect x="14" y="449" width="232" height="1" fill="#ddd"/>
+
+        <!-- Bottom nav bar -->
+        <rect x="14" y="470" width="232" height="36" fill="#fafaf8"/>
+        <rect x="14" y="470" width="232" height="1" fill="#ddd"/>
+        <!-- Home icon -->
+        <text x="60" y="494" font-family="Arial Black, Arial" font-size="7" fill="#111" text-anchor="middle" letter-spacing="0.15">МЕНЮ</text>
+        <rect x="14" y="470" width="1" height="36" fill="#ddd"/>
+        <!-- Order icon -->
+        <rect x="88" y="470" width="108" height="36" fill="#111"/>
+        <text x="142" y="494" font-family="Arial Black, Arial" font-weight="900" font-size="7" fill="#fafaf8" text-anchor="middle" letter-spacing="0.2">КОРЗИНА  0</text>
+        <rect x="195" y="470" width="1" height="36" fill="#333"/>
+        <!-- Info icon -->
+        <text x="224" y="494" font-family="Arial Black, Arial" font-size="7" fill="#111" text-anchor="middle" letter-spacing="0.15">О НАС</text>
+
+        <!-- Home indicator -->
+        <rect x="100" y="504" width="60" height="3" rx="1.5" fill="#111" opacity=".3"/>
+
+        <!-- Phone side buttons -->
+      </svg>
+    </div>
+  </div>
+
+
+</section>
+
+<section id="problem">
+  <div class="sec-label reveal">01 / Проблема</div>
+  <div class="sec-title reveal">Яндекс Еда vs<br>свой сайт</div>
+  <p class="prob-lead reveal">При чеке <strong>1 000 ₽</strong> и <strong>200 заказах в месяц</strong> разница между агрегатором и своим сайтом — больше <strong>720 000 рублей в год.</strong></p>
+  <div class="vs-blocks">
+
+    <!-- ЛЕВЫЙ: Яндекс Еда — акцентная цифра убытка -->
+    <div class="vs-block agg reveal">
+      <div class="vs-ghost">720</div>
+      <div>
+        <div class="vs-block-label"><span class="vs-badge-dot"></span>Яндекс Еда</div>
+        <div class="vs-big-num">−35%</div>
+        <div class="vs-big-sub">с каждого заказа уходит<br>платформе — без переговоров</div>
+      </div>
+      <ul class="vs-items">
+        <li class="vs-item"><span class="vs-item-num">01</span><span class="vs-item-body">Комиссия 25–35% — без переговоров</span></li>
+        <li class="vs-item"><span class="vs-item-num">02</span><span class="vs-item-body">Клиентская база принадлежит Яндексу</span></li>
+        <li class="vs-item"><span class="vs-item-num">03</span><span class="vs-item-body">Рейтинг работает на их платформу</span></li>
+        <li class="vs-item"><span class="vs-item-num">04</span><span class="vs-item-body">Повторный клиент — 3× дороже вернуть</span></li>
+        <li class="vs-item"><span class="vs-item-num">05</span><span class="vs-item-body">720 000 ₽ в год — чистые потери</span></li>
+      </ul>
+    </div>
+
+    <!-- ПРАВЫЙ: Свой сайт — цифра + список преимуществ -->
+    <div class="vs-block own reveal reveal-d1">
+      <div class="vs-block-label"><span class="vs-badge-dot"></span>Свой сайт</div>
+      <div class="vs-own-head">
+        <div class="vs-own-num-wrap">
+          <div class="vs-big-num">0%</div>
+        </div>
+        <div class="vs-own-context">
+          <div class="vs-own-context-val">+60 000 ₽/мес</div>
+          <div class="vs-own-context-lbl">экономия с первого дня</div>
+        </div>
+      </div>
+      <ul class="vs-items">
+        <li class="vs-item"><span class="vs-item-num">—</span><span class="vs-item-body"><strong>Прямые заказы</strong> — 0% комиссии навсегда</span></li>
+        <li class="vs-item"><span class="vs-item-num">—</span><span class="vs-item-body"><strong>Своя база</strong> — контакты, история, лояльность</span></li>
+        <li class="vs-item"><span class="vs-item-num">—</span><span class="vs-item-body"><strong>Рейтинг</strong> работает на ваш бренд</span></li>
+        <li class="vs-item"><span class="vs-item-num">—</span><span class="vs-item-body"><strong>Upsell-блоки</strong> — средний чек +20%</span></li>
+        <li class="vs-item"><span class="vs-item-num">—</span><span class="vs-item-body">Окупаемость — <strong>5–6 месяцев</strong></span></li>
+      </ul>
+    </div>
+
+  </div>
+  <div class="counter-card reveal">
+    <div class="counter-top">
+      <div>
+        <div class="counter-eyebrow">Уже потеряли агрегатору в этом году</div>
+        <div class="counter-number" id="lossCounter">0 ₽</div>
+        <div class="counter-since" id="lossPeriod">с 1 января — считаем в реальном времени</div>
+      </div>
+      <div class="counter-year-badge" id="yearBadge">2026</div>
+    </div>
+    <div class="counter-sliders">
+      <div class="slider-row"><div class="slider-head"><span class="slider-label">Заказов в месяц</span><span class="slider-val" id="valOrders">200</span></div><input type="range" id="slOrders" min="20" max="1000" value="200" step="10"></div>
+      <div class="slider-row"><div class="slider-head"><span class="slider-label">Средний чек</span><span class="slider-val" id="valCheck">1 000 ₽</span></div><input type="range" id="slCheck" min="300" max="5000" value="1000" step="50"></div>
+      <div class="slider-row"><div class="slider-head"><span class="slider-label">Комиссия агрегатора</span><span class="slider-val" id="valComm">30%</span></div><input type="range" id="slComm" min="15" max="40" value="30" step="1"></div>
+    </div>
+    <div class="counter-results">
+      <div class="cr-cell"><div class="cr-label">Потери в месяц</div><div class="cr-val loss" id="resMonth">60 000 ₽</div><div class="cr-note">уходит агрегатору</div></div>
+      <div class="cr-cell"><div class="cr-label">Потери в год</div><div class="cr-val loss" id="resYear">720 000 ₽</div><div class="cr-note">при текущих параметрах</div></div>
+      <div class="cr-cell"><div class="cr-label">Сайт окупится за</div><div class="cr-val" id="resPayback">7 мес.</div><div class="cr-note">при стоимости 30 000 ₽</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="solution">
+  <div class="sec-label reveal">02 / Решение</div>
+  <div class="sec-title reveal">Что получает<br>Super Burger</div>
+  <p class="reveal" style="font-size:clamp(13px,1.2vw,15px);color:var(--mid);max-width:580px;line-height:1.8;margin-bottom:clamp(20px,3.5vh,32px)">Готовый рабочий сайт — онлайн-заказ, корзина, управление меню без разработчика. Адаптирован под бургеры: меню по категориям, вес, острота, размер.</p>
+  <div class="feat-tabs-nav reveal" id="featTabsNav">
+    <button class="feat-tab-btn on" data-tab="order">Заказ</button>
+    <button class="feat-tab-btn" data-tab="growth">Рост</button>
+    <button class="feat-tab-btn" data-tab="promo">Продвижение</button>
+    <button class="feat-tab-btn" data-tab="ops">Управление</button>
+  </div>
+  <div class="feat-panel on reveal" id="tab-order">
+    <div class="fp-card"><div class="fp-card-metric">3</div><div class="fp-card-name">Клика до заказа</div><div class="fp-card-desc">Корзина без регистрации. Гость выбирает бургер, добавляет картошку и оформляет — без лишних шагов</div></div>
+    <div class="fp-card"><div class="fp-card-metric">0%</div><div class="fp-card-name">Комиссия с заказа</div><div class="fp-card-desc">Весь чек — ваш. Никакого Яндекса между вами и гостем. Навсегда</div></div>
+    <div class="fp-card wide"><div class="fp-card-metric">Telegram / Email</div><div class="fp-card-name">Уведомление сразу после заказа</div><div class="fp-card-desc">Новый заказ приходит мгновенно — в Telegram-бот или на почту. Ничего не потеряется, никакой ручной проверки</div></div>
+  </div>
+  <div class="feat-panel" id="tab-growth">
+    <div class="fp-card"><div class="fp-card-metric">+20%</div><div class="fp-card-name">К среднему чеку</div><div class="fp-card-desc">Upsell-блоки: картошка фри, соус, напиток — предлагаются автоматически перед оплатой</div></div>
+    <div class="fp-card"><div class="fp-card-metric">SEO</div><div class="fp-card-name">Органический трафик</div><div class="fp-card-desc">Клиенты находят вас по запросу «бургеры Челябинск» напрямую, без агрегатора</div></div>
+    <div class="fp-card wide"><div class="fp-card-metric">100%</div><div class="fp-card-name">Мобильная адаптация</div><div class="fp-card-desc">Все функции работают на смартфоне. Протестировано на iOS и Android — от 375px</div></div>
+  </div>
+  <div class="feat-panel" id="tab-promo">
+    <div class="fp-card"><div class="fp-card-metric">Топ</div><div class="fp-card-name">В локальном поиске</div><div class="fp-card-desc">SEO и микроразметка настроены под «бургеры Челябинск» — клиенты находят вас напрямую</div></div>
+    <div class="fp-card"><div class="fp-card-metric">2ГИС</div><div class="fp-card-name">Яндекс.Карты интегрированы</div><div class="fp-card-desc">Кнопка «Как добраться» и карта на сайте. Ваш рейтинг работает на вас</div></div>
+    <div class="fp-card wide"><div class="fp-card-metric">Ваша база</div><div class="fp-card-name">Клиенты остаются у вас</div><div class="fp-card-desc">История заказов, контакты, повторные покупки — всё это ваши данные, а не Яндекса</div></div>
+  </div>
+  <div class="feat-panel" id="tab-ops">
+    <div class="fp-card"><div class="fp-card-metric">0 ₽</div><div class="fp-card-name">Доп. расходов</div><div class="fp-card-desc">Панель управления меню — меняете позиции, цены и акции самостоятельно</div></div>
+    <div class="fp-card"><div class="fp-card-metric">6+</div><div class="fp-card-name">Разделов меню</div><div class="fp-card-desc">Бургеры, снеки, напитки, соусы, сеты, детское меню — с фильтрами</div></div>
+    <div class="fp-card wide"><div class="fp-card-metric">12 мес.</div><div class="fp-card-name">Гарантия и поддержка</div><div class="fp-card-desc">Год технической поддержки входит в стоимость. Хостинг и домен первый год — в подарок</div></div>
+  </div>
+</section>
+
+<section id="demo" style="padding:clamp(48px,8vh,80px) clamp(20px,5vw,64px);background:var(--dark)">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:clamp(24px,4vw,56px);flex-wrap:wrap">
+    <div>
+      <div style="font-family:var(--font);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:rgba(250,250,248,.3);margin-bottom:clamp(10px,1.5vh,16px)">Демо-сайт</div>
+      <div style="font-family:var(--font);font-size:clamp(22px,3.5vw,44px);letter-spacing:-0.03em;text-transform:uppercase;color:var(--bg);line-height:1;margin-bottom:clamp(8px,1.2vh,14px)">Посмотреть как будет<br>выглядеть ваш сайт</div>
+      <div style="font-size:clamp(12px,1vw,14px);color:rgba(250,250,248,.4);font-family:var(--body)">Кликайте, листайте, добавляйте в корзину — это уже работает</div>
+    </div>
+    <button class="btn-demo" onclick="alert('Ссылка появится позже')">Открыть демо →</button>
+  </div>
+</section>
+
+<section id="roi">
+  <div class="sec-label reveal">03 / Окупаемость</div>
+  <div class="sec-title reveal">Математика<br>простая</div>
+  <div class="roi-grid">
+    <div class="roi-steps reveal">
+      <div class="roi-step"><div class="roi-step-num">01</div><div class="roi-step-body"><div class="roi-step-lbl">Стоимость сайта</div><div class="roi-step-val">30 000 ₽ — единоразово</div></div></div>
+      <div class="roi-step"><div class="roi-step-num">02</div><div class="roi-step-body"><div class="roi-step-lbl">Экономия при 50 заказах/мес через сайт</div><div class="roi-step-val">~5 000 ₽/месяц</div></div></div>
+      <div class="roi-step"><div class="roi-step-num">03</div><div class="roi-step-body"><div class="roi-step-lbl">Срок окупаемости</div><div class="roi-step-val">5,8 месяца</div></div></div>
+      <div class="roi-step"><div class="roi-step-num">04</div><div class="roi-step-body"><div class="roi-step-lbl">Чистая экономия через год</div><div class="roi-step-val">+60 000 ₽ и больше</div></div></div>
+    </div>
+    <div class="reveal reveal-d2">
+      <div class="roi-highlight-box">
+        <div class="roi-hl-pre">Ключевой факт</div>
+        <div class="roi-hl-val">4 недели</div>
+        <p class="roi-hl-sub">столько вы отдаёте Яндекс Еде — и это стоит больше, чем весь сайт под ключ</p>
+        <div class="roi-hl-accent">Сайт дешевле 4 недель комиссии</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="packages">
+  <div class="sec-label reveal">04 / Стоимость</div>
+  <div class="sec-title reveal">Пакеты и цены</div>
+  <div class="pkg-grid reveal">
+    <div class="pkcard">
+      <div class="pk-pop">Базовый</div>
+      <div class="pk-name">Лендинг</div>
+      <div class="pk-tagline">Всё из демо-сайта, без панели управления меню.</div>
+      <div class="pk-price">15 000 ₽</div>
+      <div class="pk-price-note">единоразово · без скрытых доплат</div>
+      <div class="pk-divider"></div>
+      <ul class="pk-feats">
+        <li><span class="ck">✓</span>Меню с категориями и фильтрами</li>
+        <li><span class="ck">✓</span>Корзина и оформление заказа</li>
+        <li><span class="ck">✓</span>Upsell-блоки (+20% к чеку)</li>
+        <li><span class="ck">✓</span>Мобильная адаптация 100%</li>
+        <li><span class="ck">✓</span>SEO + 2ГИС / Яндекс.Карты</li>
+        <li class="off"><span class="ck">—</span>Панель управления меню</li>
+        <li class="off"><span class="ck">—</span>Аналитика и дашборд</li>
+        <li class="off"><span class="ck">—</span>Telegram-боты</li>
+      </ul>
+      <div class="pk-time">⏱ <strong>5–7 рабочих дней</strong></div>
+      <button class="btn-pk" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Выбрать</button>
+    </div>
+    <div class="pkcard hot">
+      <div class="pk-pop">Рекомендуем</div>
+      <div class="pk-name">Полный сайт</div>
+      <div class="pk-tagline">Всё из демо плюс панель управления — меняете меню сами.</div>
+      <div class="pk-price">30 000 ₽</div>
+      <div class="pk-price-note">единоразово · гарантия 12 месяцев</div>
+      <div class="pk-divider"></div>
+      <ul class="pk-feats">
+        <li><span class="ck">✓</span>Всё из «Лендинга»</li>
+        <li><span class="ck">✓</span>Панель управления меню</li>
+        <li><span class="ck">✓</span>Меняете цены без разработчика</li>
+        <li><span class="ck">✓</span>Видео-инструкция по управлению</li>
+        <li><span class="ck">✓</span>Хостинг и домен первый год в подарок</li>
+        <li class="off"><span class="ck">—</span>Аналитика и дашборд</li>
+        <li class="off"><span class="ck">—</span>Telegram-боты</li>
+        <li class="off"><span class="ck">—</span>Яндекс.Директ</li>
+      </ul>
+      <div class="pk-time">⏱ <strong>7–10 рабочих дней</strong></div>
+      <button class="btn-pk" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Выбрать</button>
+    </div>
+    <div class="pkcard">
+      <div class="pk-pop">Максимум</div>
+      <div class="pk-name">Сайт + CRM</div>
+      <div class="pk-tagline">Полный сайт плюс автоматизация, продвижение и брендбук в подарок.</div>
+      <div class="pk-price">50 000 ₽</div>
+      <div class="pk-price-note">единоразово · поддержка 12 месяцев</div>
+      <div class="pk-divider"></div>
+      <ul class="pk-feats">
+        <li><span class="ck">✓</span>Всё из «Полного сайта»</li>
+        <li><span class="ck">✓</span>Аналитика и дашборд</li>
+        <li><span class="ck">✓</span>Telegram-бот для курьеров</li>
+        <li><span class="ck">✓</span>Telegram-бот для приёма заказов</li>
+        <li><span class="ck">✓</span>Настройка Яндекс.Директа</li>
+        <li><span class="ck">✓</span>Хостинг и домен первый год в подарок</li>
+        <li><span class="ck">✓</span><strong>Брендбук в подарок</strong></li>
+      </ul>
+      <div class="pk-time">⏱ <strong>14–21 рабочий день</strong></div>
+      <button class="btn-pk" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Выбрать</button>
+    </div>
+  </div>
+  <p class="reveal" style="font-size:11px;color:var(--mid);margin-top:clamp(14px,2vw,20px);line-height:1.6"><strong style="font-family:var(--font);color:var(--dark)">Все цены фиксированы.</strong> Называю стоимость до начала — она не меняется.</p>
+</section>
+
+<section id="studio">
+  <div class="sec-label reveal">05 / Обо мне</div>
+  <div class="sec-title reveal">Как мы будем<br>работать вместе</div>
+  <div class="process-card reveal">
+    <div class="process-head">
+      <div><div class="process-head-name">Иван Погоров</div><div class="process-head-sub">Веб-разработчик · Челябинск</div></div>
+    </div>
+    <div>
+      <div class="guarantee-item"><div class="gi-index">01</div><div class="gi-body"><div class="gi-title">Сделал демо специально под вас</div><div class="gi-desc">Изучил меню, атмосферу и позиционирование Super Burger — не шаблон, а конкретное решение под ваш бизнес.</div></div><div class="gi-tag"><div class="gi-tag-inner">под ключ</div></div></div>
+      <div class="guarantee-item"><div class="gi-index">02</div><div class="gi-body"><div class="gi-title">Цена фиксируется до старта</div><div class="gi-desc">Называю стоимость до начала работ — она не меняется. Никаких «обнаружили сложность» в середине проекта.</div></div><div class="gi-tag"><div class="gi-tag-inner">30 000 ₽</div></div></div>
+      <div class="guarantee-item"><div class="gi-index">03</div><div class="gi-body"><div class="gi-title">Показываю прогресс каждые 2 дня</div><div class="gi-desc">Промежуточные результаты в Telegram — вы видите как растёт сайт. Правки вносятся сразу.</div></div><div class="gi-tag"><div class="gi-tag-inner">каждые 2 дня</div></div></div>
+      <div class="guarantee-item"><div class="gi-index">04</div><div class="gi-body"><div class="gi-title">Сдача в срок или возврат предоплаты</div><div class="gi-desc">Договорились на 10 дней — значит 10 дней. Если задержка по моей вине, возвращаю предоплату без вопросов.</div></div><div class="gi-tag"><div class="gi-tag-inner">5–10 дней</div></div></div>
+      <div class="guarantee-item"><div class="gi-index">05</div><div class="gi-body"><div class="gi-title">Обучаю управлять сайтом</div><div class="gi-desc">Записываю видео-инструкцию по панели. После сдачи вы сами меняете меню и цены — без звонков мне.</div></div><div class="gi-tag"><div class="gi-tag-inner">видео + инструкция</div></div></div>
+      <div class="guarantee-item"><div class="gi-index">06</div><div class="gi-body"><div class="gi-title">Год на связи после запуска</div><div class="gi-desc">12 месяцев технической поддержки входят в стоимость. Что-то сломалось — пишете в Telegram, чиню в тот же день.</div></div><div class="gi-tag"><div class="gi-tag-inner">12 месяцев</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-sec" id="cta" style="border-bottom:none">
+  <div class="cta-label">06 / Следующий шаг</div>
+  <div class="cta-inner">
+    <div class="reveal">
+      <div class="cta-deadline-label">Что произойдёт дальше</div>
+      <div class="cta-steps">
+        <div class="cta-step">
+          <div class="cta-step-num">1</div>
+          <div class="cta-step-body">
+            <div class="cta-step-title">Пишете в Telegram</div>
+            <div class="cta-step-desc">Отвечу в течение 2 часов — даже вечером</div>
+          </div>
+        </div>
+        <div class="cta-step">
+          <div class="cta-step-num">2</div>
+          <div class="cta-step-body">
+            <div class="cta-step-title">Созваниваемся на 15 минут</div>
+            <div class="cta-step-desc">Показываю демо, считаем окупаемость под ваши цифры</div>
+          </div>
+        </div>
+        <div class="cta-step">
+          <div class="cta-step-num">3</div>
+          <div class="cta-step-body">
+            <div class="cta-step-title">Вы получаете готовый сайт</div>
+            <div class="cta-step-desc">Через 7–10 дней — с обучением и поддержкой на год</div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-deadline-note">Цена 30 000 ₽ действует до <strong>30 июня</strong> — потом 55 000 ₽.<br>Осталось <em id="daysLeft">...</em> дн.</div>
+    </div>
+    <div class="cta-contacts reveal reveal-d1">
+      <div class="cta-main-action">
+        <a class="cta-main-btn" href="https://t.me/pogorik" target="_blank">
+          Написать в Telegram →
+        </a>
+        <div class="cta-main-hint">Напишите «демо» — вышлю ссылку и расчёт окупаемости</div>
+      </div>
+      <a class="cta-contact-row" href="https://t.me/pogorik" target="_blank">
+        <div><div class="cta-contact-ch">Telegram</div><div class="cta-contact-val">@pogorik</div><div class="cta-contact-hint">Отвечу в течение 2 часов</div></div>
+        <div class="cta-contact-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M15 8l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </a>
+      <a class="cta-contact-row" href="tel:+79193445123">
+        <div><div class="cta-contact-ch">Телефон</div><div class="cta-contact-val">+7 (919) 344-51-23</div><div class="cta-contact-hint">Пн–Пт, 9:00–19:00</div></div>
+        <div class="cta-contact-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M15 8l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-copy">© 2026 Иван Погоров · КП для Super Burger</div>
+  <div class="ft-logo">SUPER<br>BURGER</div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(e=>e.isIntersecting&&e.target.classList.add('vis')),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+(function(){
+  const COST=30000,now=new Date(),secs=(now-new Date(now.getFullYear(),0,1))/1000;
+  const fmt=n=>Math.round(n).toLocaleString('ru-RU')+' ₽',fmtN=n=>Math.round(n).toLocaleString('ru-RU');
+  const el=document.getElementById('lossCounter'),elP=document.getElementById('lossPeriod'),yb=document.getElementById('yearBadge');
+  if(yb)yb.textContent=now.getFullYear();
+  if(elP)elP.textContent='с 1 января '+now.getFullYear()+' — растёт каждую секунду';
+  const slO=document.getElementById('slOrders'),slC=document.getElementById('slCheck'),slCo=document.getElementById('slComm');
+  const vO=document.getElementById('valOrders'),vC=document.getElementById('valCheck'),vCo=document.getElementById('valComm');
+  const rM=document.getElementById('resMonth'),rY=document.getElementById('resYear'),rP=document.getElementById('resPayback');
+  function p(){return{o:+slO.value,c:+slC.value,co:+slCo.value/100}}
+  function ps(p){return p.o*p.c*p.co*12/365/24/3600}
+  function track(e){const pct=((+e.value-+e.min)/(+e.max-+e.min))*100;e.style.background='linear-gradient(to right,#111 '+pct+'%,#ddd '+pct+'%)'}
+  [slO,slC,slCo].forEach(track);
+  let perSec=ps(p()),ys=secs*perSec,cur=ys;
+  function upd(){
+    const v=p();vO.textContent=fmtN(v.o);vC.textContent=fmtN(v.c)+' ₽';vCo.textContent=Math.round(v.co*100)+'%';
+    const m=v.o*v.c*v.co,yr=m*12,pb=m>0?Math.ceil(COST/m):'—';
+    rM.textContent=fmt(m);rY.textContent=fmt(yr);rP.textContent=typeof pb==='number'?pb+' мес.':pb;
+    perSec=ps(v);ys=secs*perSec;cur=ys
+  }
+  [slO,slC,slCo].forEach(e=>{e.addEventListener('input',()=>{track(e);upd()})});
+  upd();
+  let go=false;
+  new IntersectionObserver(e=>{if(e[0].isIntersecting&&!go){go=true;const t0=performance.now(),tgt=ys,dur=1600;const run=ts=>{const q=Math.min((ts-t0)/dur,1);el.textContent=fmt(tgt*(1-Math.pow(1-q,4)));q<1?requestAnimationFrame(run):(cur=tgt,(function tick(){cur+=perSec/60;el.textContent=fmt(cur);requestAnimationFrame(tick)})())}; requestAnimationFrame(run)}},{threshold:.3}).observe(el)
+})();
+document.getElementById('featTabsNav').addEventListener('click',e=>{
+  const b=e.target.closest('.feat-tab-btn');if(!b)return;
+  document.querySelectorAll('.feat-tab-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  document.querySelectorAll('.feat-panel').forEach(x=>x.classList.remove('on'));
+  const pan=document.getElementById('tab-'+b.dataset.tab);if(pan)pan.classList.add('on')
+});
+(function(){
+  const el=document.getElementById('daysLeft');if(!el)return;
+  const d=Math.ceil((new Date('2026-06-30T23:59:59')-new Date())/864e5);
+  const w=d===1?'день':d>1&&d<5?'дня':'дней';
+  el.textContent=d>0?d+' '+w:'0 дней'
+})();
+</script>
+</body>
+</html>
